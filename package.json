@@ -1,0 +1,30 @@
+{
+  "name": "cb-back",
+  "version": "1.0.0",
+  "description": "cookbook back-end",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/P-Sergey/CB-back.git"
+  },
+  "keywords": [
+    "cookbook",
+    "back-end"
+  ],
+  "author": "P-Sergey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/P-Sergey/CB-back/issues"
+  },
+  "homepage": "https://github.com/P-Sergey/CB-back#readme",
+  "dependencies": {
+    "pg": "^8.3.0",
+    "sequelize": "^6.3.4"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
+  }
+}
