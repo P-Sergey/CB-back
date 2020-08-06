@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Добавление пользователя</title>
+  <meta charset="utf-8" />
+  <style>.field{width:180px;}</style>
+</head>
+<body>
+  <h1>Добавление пользователя</h1>
+    <form method="POST">
+      <label>Name</label><br>
+      <input name="name" value="{{user.name}}"  class="field" /><br><br>
+      <label>Email</label><br>
+      <input name="email" value="{{user.email}}"  class="field" /><br><br>
+      <label>Password</label><br>
+      <input name="password" value="{{user.password}}"  class="field" /><br><br>
+      <label>Token</label><br>
+      <input name="token" value="{{user.token}}"  class="field" /><br><br>
+      <input type="submit" value="Отправить" />
+    </form>
+    <a href="/">К списку пользователей</a>
+</body>
+<html>

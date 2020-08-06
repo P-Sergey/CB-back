@@ -10,6 +10,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Book.belongsToMany(models.Recipe, { through: 'Book_Recipe' });
+      /* models.book.belongsToMany(models.recipe, {
+        through: {
+          model: models.book_recipe,
+          unique: false,
+        },
+        foreignKey: 'book_id',
+      }); */
     }
   }
   Book.init(
