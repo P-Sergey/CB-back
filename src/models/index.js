@@ -1,25 +1,12 @@
-'use strict';
-
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 import configJson from '../config/config.json';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 
 const config = configJson[env];
-//const fs = require('fs');
-//const path = require('path');
-//const Sequelize = require('sequelize');
-//const basename = path.basename(__filename);
-//const env = process.env.NODE_ENV || 'development';
-//const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
 let sequelize;
@@ -45,6 +32,7 @@ fs.readdirSync(__dirname)
       sequelize,
       Sequelize.DataTypes
     );
+
     db[model.name] = model;
   });
 
@@ -56,7 +44,5 @@ Object.keys(db).forEach((modelName) => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-
-//module.exports = db;
 
 export default db;

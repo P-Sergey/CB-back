@@ -1,11 +1,10 @@
 {
-  "type": "module",
   "name": "cb-back",
   "version": "1.0.0",
   "description": "cookbook back-end",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node --experimental-json-modules --experimental-modules ./api/app.js",
+    "dev": "nodemon --exec babel-node --experimental-json-modules --experimental-modules ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

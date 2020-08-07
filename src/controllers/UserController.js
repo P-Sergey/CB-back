@@ -6,15 +6,18 @@ const util = new Util();
 class UserController {
   static async getAllUsers(req, res) {
     try {
-      const allUsers = await UserService.getAllBooks();
+      const allUsers = await UserService.getAllUsers();
+
       if (allUsers.length > 0) {
-        util.setSuccess(200, 'Users retrieved', allUsers);
+        // util.setSuccess(200, 'Users retrieved', allUsers);
+        res.status(200).send('ok');
       } else {
         util.setSuccess(200, 'No user found');
       }
+
       return util.send(res);
     } catch (error) {
-      util.setError(400, error);
+      util.setError(400, 'Can not connect to database');
       return util.send(res);
     }
   }
@@ -29,10 +32,13 @@ class UserController {
       util.setError(400, 'Please provide complete details');
       return util.send(res);
     }
+
     const newUser = req.body;
+
     try {
-      const createdUser = await BookService.addBook(newUser);
+      const createdUser = await UserService.addUser(newUser);
       util.setSuccess(201, 'User Added!', createdUser);
+
       return util.send(res);
     } catch (error) {
       util.setError(400, error.message);
@@ -70,12 +76,12 @@ class UserController {
     }
 
     try {
-      const userToDelete = await BookService.deleteBook(id);
+      const userToDelete = await UserService.deleteUser(id);
 
       if (userToDelete) {
-        util.setSuccess(200, 'Book deleted');
+        util.setSuccess(200, 'User deleted');
       } else {
-        util.setError(404, `Book with the id ${id} cannot be found`);
+        util.setError(404, `User with the id ${id} cannot be found`);
       }
       return util.send(res);
     } catch (error) {
