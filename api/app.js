@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import userRoutes from './routes/UserRoutes';
+import userRoutes from './server/routes/UserRoutes.js';
 
 const app = express();
 

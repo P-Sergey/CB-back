@@ -1,4 +1,4 @@
-import db from '../models';
+import db from '../src/models/index.js';
 
 class UserService {
   static async getAllUsers() {

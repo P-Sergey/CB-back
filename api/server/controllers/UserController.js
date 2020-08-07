@@ -1,5 +1,5 @@
-import UserService from '../services/UserService';
-import Util from '../utils/Utils';
+import UserService from '../services/UserService.js';
+import Util from '../utils/Utils.js';
 
 const util = new Util();
 
