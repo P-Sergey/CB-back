@@ -1,4 +1,3 @@
-//import { Router } from 'express';
 import pkg from 'express';
 const { Router } = pkg;
 import UserController from '../controllers/UserController.js';

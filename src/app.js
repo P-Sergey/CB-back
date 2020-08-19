@@ -1,13 +1,15 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/UserRoutes.js';
+import cors from 'cors';
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 9000;
 
 app.use('/users', userRoutes);
 
