@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/UserRoutes.js';
+import recipeRoutes from './routes/RecipeRoutes.js';
 import cors from 'cors';
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const port = process.env.PORT || 9000;
 
 app.use('/users', userRoutes);
+app.use('/recipes', recipeRoutes);
 
 app.get('*', (req, res) =>
   res.status(200).send({

@@ -9,11 +9,9 @@ class UserController {
       const allUsers = await UserService.getAllUsers();
 
       if (allUsers.length > 0) {
-        // util.setSuccess(200, 'Users retrieved', allUsers);
         res.status(200).send(allUsers);
       } else {
         res.status(200).send('No user found');
-        //util.setSuccess(200, 'No user found');
       }
 
       return util.send(res);
