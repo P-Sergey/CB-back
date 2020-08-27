@@ -1,5 +1,8 @@
 import UserService from '../services/UserService.js';
 import Util from '../utils/Utils.js';
+import bcrypt, { hash } from 'bcrypt';
+
+const saltRounds = 10;
 
 const util = new Util();
 
@@ -11,7 +14,7 @@ class UserController {
       if (allUsers.length > 0) {
         res.status(200).send(allUsers);
       } else {
-        res.status(200).send('No user found');
+        res.status(200).send(['No user found']);
       }
 
       return util.send(res);
@@ -22,23 +25,51 @@ class UserController {
   }
 
   static async addUser(req, res) {
-    if (
-      !req.body.name ||
-      !req.body.email ||
-      !req.body.password ||
-      !req.body.token
-    ) {
+    if (!req.body.name || !req.body.email || !req.body.password) {
       util.setError(400, 'Please provide complete details');
       return util.send(res);
     }
 
-    const newUser = req.body;
+    bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      const newUser = {
+        name: req.body.name,
+        email: req.body.email,
+        password: hash,
+      };
+      try {
+        const createdUser = await UserService.addUser(newUser);
+        util.setSuccess(201, 'User Added!', createdUser);
 
-    try {
-      const createdUser = await UserService.addUser(newUser);
-      util.setSuccess(201, 'User Added!', createdUser);
+        return util.send(res);
+      } catch (error) {
+        util.setError(400, error.message);
+        return util.send(res);
+      }
+    });
+  }
 
+  static async signInUser(req, res) {
+    if (!req.body.email || !req.body.password) {
+      util.setError(400, 'Please provide complete details');
       return util.send(res);
+    }
+    const signInData = req.body;
+    try {
+      const userToSignIn = await UserService.signInUser(signInData);
+      bcrypt.compare(req.body.password, userToSignIn.password, function (
+        err,
+        result
+      ) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(result);
+      });
     } catch (error) {
       util.setError(400, error.message);
       return util.send(res);

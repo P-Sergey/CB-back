@@ -17,6 +17,20 @@ class UserService {
     }
   }
 
+  static async signInUser(signInData) {
+    try {
+      const userToSignIn = await db.User.findOne({
+        where: { email: signInData.email },
+      });
+
+      if (userToSignIn) {
+        return userToSignIn;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async updateUser(id, updateUser) {
     try {
       const userToUpdate = await db.User.findOne({
