@@ -11,6 +11,12 @@ class UserService {
 
   static async addUser(newUser) {
     try {
+      const userExists = await db.User.findOne({
+        where: { email: newUser.email },
+      });
+      if (userExists) {
+        throw new Error('User already registered');
+      }
       return await db.User.create(newUser);
     } catch (error) {
       throw error;

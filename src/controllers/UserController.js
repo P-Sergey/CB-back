@@ -1,6 +1,11 @@
 import UserService from '../services/UserService.js';
 import Util from '../utils/Utils.js';
 import bcrypt, { hash } from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+require('dotenv').config();
+
+const secretKey = process.env.API_KEY;
 
 const saltRounds = 10;
 
@@ -42,7 +47,7 @@ class UserController {
       };
       try {
         const createdUser = await UserService.addUser(newUser);
-        util.setSuccess(201, 'User Added!', createdUser);
+        res.status(200).send(createdUser);
 
         return util.send(res);
       } catch (error) {
@@ -54,25 +59,34 @@ class UserController {
 
   static async signInUser(req, res) {
     if (!req.body.email || !req.body.password) {
-      util.setError(400, 'Please provide complete details');
-      return util.send(res);
+      return res.status(400).send('Please provide complete details');
     }
     const signInData = req.body;
     try {
       const userToSignIn = await UserService.signInUser(signInData);
-      bcrypt.compare(req.body.password, userToSignIn.password, function (
-        err,
-        result
-      ) {
-        if (err) {
-          console.error(err);
-          return;
+      console.log(userToSignIn);
+      bcrypt.compare(
+        req.body.password,
+        userToSignIn.password,
+        (err, result) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          console.log(result);
+          const jwtPayload = {
+            id: userToSignIn.id,
+            email: userToSignIn.email,
+          };
+          const expiration = '10m';
+          const token = jwt.sign(jwtPayload, secretKey, {
+            expiresIn: expiration,
+          });
+          return res.send(token);
         }
-        console.log(result);
-      });
+      );
     } catch (error) {
-      util.setError(400, error.message);
-      return util.send(res);
+      return res.status(400).send(error.message);
     }
   }
 
