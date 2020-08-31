@@ -16,11 +16,9 @@ class UserController {
     try {
       const allUsers = await UserService.getAllUsers();
 
-      if (allUsers.length > 0) {
-        res.status(200).send(allUsers);
-      } else {
-        res.status(200).send(['No user found']);
-      }
+      allUsers.length > 0
+        ? res.status(200).send(allUsers)
+        : res.status(200).send([{ name: 'No user found' }]);
 
       return util.send(res);
     } catch (error) {
@@ -78,7 +76,7 @@ class UserController {
             id: userToSignIn.id,
             email: userToSignIn.email,
           };
-          const expiration = '10m';
+          const expiration = '1m';
           const token = jwt.sign(jwtPayload, secretKey, {
             expiresIn: expiration,
           });
